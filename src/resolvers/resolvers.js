@@ -1,4 +1,4 @@
-import messageResolver from "./message.resolver"
 import userResolver from "./user.resolver"
+import songResolver from "./song.resolver"
 
-export default [messageResolver, userResolver]
+export default [userResolver, songResolver]

@@ -1,20 +1,21 @@
+import User from "../models/user.model"
+// 👆 this should be unused . . use models from context.  just here for intellisense
+
 export const userResolver = {
   Query: {
-    me: (p, a, { me }) => {
-      return me
+    user: async (parent, { id }, { models: { User } }) => {
+      return User.findById(id)
     },
-    user: (parent, { id }, { models }) => {
-      return models.fakeUsers[id]
-    },
-    users: (_, __, { models: { fakeUsers } }) => {
-      return Object.values(fakeUsers)
+    users: (_, __, { models }) => {
+      return models.User.find({})
     }
   },
   Mutation: {},
   User: {
-    username: user => user.username,
-    messages: (user, __, { models: { fakeMessages } }) => {
-      return Object.values(fakeMessages).filter(mess => mess.userId === user.id)
+    id: user => user._id,
+    songs: async (user, args, ctx) => {
+      const { songs } = await User.findById(user.id).populate("songs")
+      return songs
     }
   }
 }

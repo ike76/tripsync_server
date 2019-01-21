@@ -1,7 +1,7 @@
 import { gql } from "apollo-server-express"
 import messageSchema from "./message.schema"
 import userSchema from "./user.schema"
-
+import songSchema from "./song.schema"
 export const linkSchema = gql`
   type Query {
     _: Boolean
@@ -14,4 +14,4 @@ export const linkSchema = gql`
   }
 `
 
-export default [linkSchema, userSchema, messageSchema]
+export default [linkSchema, userSchema, songSchema]
