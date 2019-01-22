@@ -6,6 +6,18 @@ export const userSchema = gql`
     user(id: ID!): User
     users: [User!]
   }
+  extend type Mutation {
+    createUser(
+      firstName: String
+      lastName: String
+      email: String!
+      password: String!
+      userHandle: String
+      photoUrl: String
+      rating: Int
+    ): User
+    deleteUser(id: ID!): Boolean
+  }
 
   type User {
     id: ID!
@@ -14,6 +26,7 @@ export const userSchema = gql`
     email: String!
     password: String!
     userHandle: String
+    rating: Int
     songs: [Song!]
   }
 `

@@ -2,12 +2,14 @@ import { gql } from "apollo-server-express"
 import messageSchema from "./message.schema"
 import userSchema from "./user.schema"
 import songSchema from "./song.schema"
+
 export const linkSchema = gql`
   type Query {
     _: Boolean
   }
   type Mutation {
     _: Boolean
+    wipeData(secretWord: String!): String
   }
   type Subscription {
     _: Boolean

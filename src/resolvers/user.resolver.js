@@ -10,10 +10,26 @@ export const userResolver = {
       return models.User.find({})
     }
   },
-  Mutation: {},
+  Mutation: {
+    createUser: async (root, args, ctx) => {
+      return User.create(args)
+    },
+    deleteUser: async (root, { id }) => {
+      const response = await User.findByIdAndDelete(id)
+      return !!response
+    }
+    // deleteAllUsers: async (root, { secretWord }) => {
+    //   if (secretWord === process.env.SECRET_DELETE_WORD) {
+    //     const { deletedCount } = await User.deleteMany()
+    //     return `users deleted: ${deletedCount}`
+    //   } else {
+    //     return "no way jose"
+    //   }
+    // }
+  },
   User: {
     id: user => user._id,
-    songs: async (user, args, ctx) => {
+    songs: async (user, args, { models: { User } }) => {
       const { songs } = await User.findById(user.id).populate("songs")
       return songs
     }

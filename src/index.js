@@ -19,19 +19,24 @@ const server = new ApolloServer({
 })
 
 server.applyMiddleware({ app, path: "/graphql" })
+
+const { DEV_PORT, TEST_PORT } = process.env
+const PORT = process.env.TEST_DB ? TEST_PORT : DEV_PORT
+
 mongoose
   .connect(
-    `mongodb://${process.env.DB_USER}:${
-      process.env.DB_PASSWORD
-    }@ds259144.mlab.com:59144/stemfish`,
+    process.env.TEST_DB || process.env.PROD_DB,
     { useNewUrlParser: true }
   )
   .then(response => {
-    app.listen(4000, () => {
-      console.log(
-        `🐠  listening on http://localhost:4000${server.graphqlPath} 🐠`
-      )
+    app.listen(PORT, () => {
+      const message = !!process.env.TEST_DB
+        ? `🧪 🧪 🧪  Test-server listening on ${PORT} 🧪 🧪 🧪`
+        : `🐠  listening on http://localhost:${PORT}${server.graphqlPath} 🐠`
+      console.log(message)
     })
+
+    return response
   })
 
 // app.listen(process.env.PORT, () => {

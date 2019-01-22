@@ -4,7 +4,7 @@ const Schema = mongoose.Schema
 const ObjectId = Schema.Types.ObjectId
 //
 
-const userSchema = new Schema({
+export const userSchema = new Schema({
   firstName: String,
   lastName: String,
   rating: Number,

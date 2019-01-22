@@ -2,7 +2,7 @@ import mongoose from "mongoose"
 const Schema = mongoose.Schema
 const ObjectId = Schema.Types.ObjectId
 
-const songSchema = new mongoose.Schema({
+export const songSchema = new mongoose.Schema({
   title: String,
   bpm: Number,
   style: [String],
