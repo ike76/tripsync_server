@@ -1,94 +1,108 @@
 import "dotenv/config"
 import { expect } from "chai"
-import { callApi, foundErrorWithText, showError } from "./helpers/call_server"
 import {
-  stars,
-  GET_ALL_USERS,
+  callApi,
+  foundErrorWithText,
+  showError,
+  stars
+} from "./helpers/call_server"
+import {
   RESET_DB,
   CREATE_USER,
   CREATE_SONG,
-  GET_USER_SONGS
-} from "./helpers/testQueries.spec"
-
-before(done => {
+  GET_USER_SONGS,
+  SIGN_UP,
+  GET_MY_SONGS
+} from "./helpers/userQueries"
+import { mochaAsync } from "./helpers/mochaAsync"
+before(() => {
   stars()
-  callApi({
+  return callApi({
     query: RESET_DB,
     variables: { secretWord: process.env.SECRET_DELETE_WORD }
-  }).then(() => done())
+  })
 })
-after(done => {
-  callApi({
+after(() => {
+  return callApi({
     query: RESET_DB,
     variables: { secretWord: process.env.SECRET_DELETE_WORD }
-  }).then(() => done())
+  })
 })
 
-describe("Users", () => {
+describe("Users", async () => {
   let validUser
-  it("starts with empty user collection", async () => {
-    const response = await callApi({ query: GET_ALL_USERS, variables: {} })
-    expect(response).to.eql({ data: { users: [] } })
-  })
-  it("creates a user", async () => {
-    const variables = {
-      email: "test@test.io",
+  let jwt
+  it("can sign in", async () => {
+    const newGuy = {
+      email: "newguy@hey.net",
       password: "powerpow",
-      userHandle: "testy_T",
-      firstName: "Testoph",
-      lastName: "McTesterton"
+      userHandle: "new_guy_432"
     }
-    const { data } = await callApi({ query: CREATE_USER, variables })
-    validUser = data.createUser
-    const { password, id, ...origUserInfo } = variables
-    expect(validUser).to.include(origUserInfo)
+    const { data } = await callApi({
+      query: SIGN_UP,
+      variables: newGuy
+    })
+    jwt = data.signUp.jwt
   })
+
   it("rejects with no email or pw", async () => {
     const variables = {
       userHandle: "Tbone sucka"
     }
     let emailErr, pwErr
     await callApi({
-      query: CREATE_USER,
+      query: SIGN_UP,
       variables
     }).catch(err => {
       emailErr = foundErrorWithText(err, "email")
       pwErr = foundErrorWithText(err, "password")
     })
 
-    expect(emailErr).to.be.true
     expect(pwErr).to.be.true
+    expect(emailErr).to.be.true
   })
-  it("valid user can add a song", async () => {
+
+  it("signed in user can add a song", async () => {
     const song1 = {
-      adminId: validUser.id,
       title: "hey now"
     }
 
     const { data, errors } = await callApi({
       query: CREATE_SONG,
-      variables: song1
+      variables: song1,
+      jwt
     })
+
     expect(errors).to.be.undefined
     expect(data).to.eql({ createSong: { title: "hey now" } })
   })
-  it("can add a 2nd song ", async () => {
-    const song2 = {
-      adminId: validUser.id,
-      title: "my second song"
+  it("not signed in user cant add a song", async () => {
+    const song1 = {
+      title: "hey now"
     }
     const { data, errors } = await callApi({
       query: CREATE_SONG,
-      variables: song2
+      variables: song1,
+      jwt: "" // not signed in
+    })
+    expect(data).to.be.null
+    expect(errors.length).to.be.greaterThan(0)
+  })
+  it("can add a 2nd song ", async () => {
+    const { data, errors } = await callApi({
+      query: CREATE_SONG,
+      variables: { title: "my second song" },
+      jwt
     })
     expect(data).to.eql({ createSong: { title: "my second song" } })
   })
-  it("can list 2 songs", async () => {
+  it("can get my songs", async () => {
     const { data } = await callApi({
-      query: GET_USER_SONGS,
-      variables: { userId: validUser.id }
+      query: GET_MY_SONGS,
+      jwt
     })
-    expect(data.user.songs).to.have.length(2)
-    expect(data.user.songs[1]).to.include({ title: "my second song" })
+    expect(data.mySongs).to.have.length(2)
+    expect(data.mySongs[1]).to.include({ title: "my second song" })
   })
+  return null
 })

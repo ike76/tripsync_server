@@ -4,9 +4,10 @@ const songSchema = gql`
   extend type Query {
     songs: [Song!]
     song(id: ID!): Song
+    mySongs: [Song!]
   }
   extend type Mutation {
-    createSong(adminId: ID!, title: String!, bpm: Int, style: [String]): Song!
+    createSong(title: String!, bpm: Int, style: [String]): Song!
   }
   type Song {
     id: ID!

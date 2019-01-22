@@ -17,8 +17,11 @@ export const userSchema = gql`
       rating: Int
     ): User
     deleteUser(id: ID!): Boolean
+    signUp(email: String!, password: String!, userHandle: String): Token
   }
-
+  type Token {
+    jwt: String!
+  }
   type User {
     id: ID!
     firstName: String

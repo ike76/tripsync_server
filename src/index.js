@@ -6,15 +6,17 @@ import models from "./models"
 import schemaArray from "./schema/schemas"
 import resolvers from "./resolvers/resolvers"
 import mongoose from "mongoose"
-
+import getUserByToken from "./helpers/getUserByToken"
 const app = express()
 app.use(cors())
 
 const server = new ApolloServer({
   typeDefs: schemaArray,
   resolvers,
-  context: {
-    models
+  context: async ({ req }) => {
+    const token = req.headers.authorization || ""
+    const me = (await getUserByToken(token)) || null
+    return { models, me }
   }
 })
 
@@ -32,7 +34,9 @@ mongoose
     app.listen(PORT, () => {
       const message = !!process.env.TEST_DB
         ? `🧪 🧪 🧪  Test-server listening on ${PORT} 🧪 🧪 🧪`
-        : `🐠  listening on http://localhost:${PORT}${server.graphqlPath} 🐠`
+        : ` 🐠  🐠  🐠  listening on http://localhost:${PORT}${
+            server.graphqlPath
+          } 🐠  🐠  🐠`
       console.log(message)
     })
 

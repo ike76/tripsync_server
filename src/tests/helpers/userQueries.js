@@ -1,5 +1,12 @@
 import { gql } from "apollo-server"
-import { PersistedQueryNotFoundError } from "apollo-server-errors"
+
+export const SIGN_UP = gql`
+  mutation SIGN_UP($email: String!, $password: String!) {
+    signUp(email: $email, password: $password) {
+      jwt
+    }
+  }
+`
 
 export const GET_ALL_USERS = gql`
   query ALL_USERS {
@@ -43,26 +50,19 @@ export const CREATE_USER = gql`
   }
 `
 export const CREATE_SONG = gql`
-  mutation CREATE_SONG($adminId: ID!, $title: String!) {
-    createSong(adminId: $adminId, title: $title) {
+  mutation CREATE_SONG($title: String!) {
+    createSong(title: $title) {
       title
     }
   }
 `
 
-exports.GET_USER_SONGS = gql`
-  query GET_USER_SONGS($userId: ID!) {
-    user(id: $userId) {
-      songs {
-        title
-        id
-      }
+exports.GET_MY_SONGS = gql`
+  query MY_SONGS {
+    mySongs {
+      title
+      bpm
+      id
     }
   }
 `
-
-export const stars = () => {
-  console.log(
-    `\n ⭐   🌟   ⭐   🌟  ⭐   🌟   ⭐   🌟  ⭐   🌟   ⭐   🌟  \n \n `
-  )
-}
