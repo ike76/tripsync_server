@@ -34,9 +34,9 @@ mongoose
     app.listen(PORT, () => {
       const message = !!process.env.TEST_DB
         ? `🧪 🧪 🧪  Test-server listening on ${PORT} 🧪 🧪 🧪`
-        : ` 🐠  🐠  🐠  listening on http://localhost:${PORT}${
+        : ` ✈️  🚌  🚕  🛩️  listening on http://localhost:${PORT}${
             server.graphqlPath
-          } 🐠  🐠  🐠`
+          } ✈️  🚌  🚕  🛩️`
       console.log(message)
     })
 

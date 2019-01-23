@@ -7,7 +7,7 @@
     "start": "nodemon --exec babel-node src/index.js",
     "test": "mocha --watch  --require @babel/register 'src/**/*.spec.js'",
     "testMe": "nodemon --exec babel-node testTown.js",
-    "test-server": "TEST_DB=mongodb://localhost:27017/stemfishtest npm start",
+    "test-server": "TEST_DB=mongodb://localhost:27017/tripsync2test npm start",
     "testing-server": "npm run test-server"
   },
   "nodemonConfig": {
