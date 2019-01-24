@@ -14,8 +14,7 @@ const mocks = {
   Int: () => 6,
   Float: () => 43.21,
   String: () => "default string",
-  User: fakeUser,
-  Song: () => ({ _id: "234345456", title: "autumn leaves" })
+  User: fakeUser
 }
 
 export default mocks

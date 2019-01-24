@@ -28,7 +28,7 @@ const PORT = process.env.TEST_DB ? TEST_PORT : DEV_PORT
 mongoose
   .connect(
     process.env.TEST_DB || process.env.PROD_DB,
-    { useNewUrlParser: true }
+    { useNewUrlParser: true, useFindAndModify: false }
   )
   .then(response => {
     app.listen(PORT, () => {

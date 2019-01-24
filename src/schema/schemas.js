@@ -1,9 +1,13 @@
 import { gql } from "apollo-server-express"
-import messageSchema from "./message.schema"
 import userSchema from "./user.schema"
-import songSchema from "./song.schema"
-
-export const linkSchema = gql`
+import locationSchema from "./location.schema"
+import itinerarySchema from "./itinerary.schema"
+import legSchema from "./leg.schema"
+import rideSchema from "./ride.schema"
+import testSchema from "./test.schema"
+import authSchema from "./auth.schema.js"
+import flightOGSchema from "./flightOG.schema"
+const linkSchema = gql`
   type Query {
     _: Boolean
   }
@@ -16,4 +20,14 @@ export const linkSchema = gql`
   }
 `
 
-export default [linkSchema, userSchema, songSchema]
+export default [
+  linkSchema,
+  userSchema,
+  locationSchema,
+  itinerarySchema,
+  legSchema,
+  rideSchema,
+  testSchema,
+  authSchema,
+  flightOGSchema
+]

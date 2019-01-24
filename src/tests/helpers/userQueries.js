@@ -7,13 +7,45 @@ export const SIGN_UP = gql`
     }
   }
 `
+export const SIGN_IN = gql`
+  query SIGN_IN($email: String!, $password: String!) {
+    signIn(email: $email, password: $password) {
+      jwt
+    }
+  }
+`
+
+export const UPDATE_ME = gql`
+  mutation UPDATE_ME(
+    $firstName: String
+    $lastName: String
+    $email: String
+    $userName: String
+    $photoUrl: String
+  ) {
+    updateMe(
+      firstName: $firstName
+      lastName: $lastName
+      userName: $userName
+      photoUrl: $photoUrl
+      email: $email
+    ) {
+      firstName
+      lastName
+      userName
+      password
+      photoUrl
+      id
+    }
+  }
+`
 
 export const GET_ALL_USERS = gql`
   query ALL_USERS {
     users {
       email
       password
-      userHandle
+      userName
       id
       firstName
       lastName
@@ -46,23 +78,6 @@ export const CREATE_USER = gql`
       id
       firstName
       lastName
-    }
-  }
-`
-export const CREATE_SONG = gql`
-  mutation CREATE_SONG($title: String!) {
-    createSong(title: $title) {
-      title
-    }
-  }
-`
-
-exports.GET_MY_SONGS = gql`
-  query MY_SONGS {
-    mySongs {
-      title
-      bpm
-      id
     }
   }
 `

@@ -1,36 +1,46 @@
 import { gql } from "apollo-server-express"
 
-export const userSchema = gql`
+const userSchema = gql`
   extend type Query {
     # me: User
     user(id: ID!): User
     users: [User!]
   }
   extend type Mutation {
-    createUser(
+    deleteUser(id: ID!): Boolean
+    updateMe(
       firstName: String
       lastName: String
-      email: String!
-      password: String!
-      userHandle: String
+      email: String
+      userName: String
       photoUrl: String
-      rating: Int
     ): User
-    deleteUser(id: ID!): Boolean
-    signUp(email: String!, password: String!, userHandle: String): Token
   }
-  type Token {
-    jwt: String!
-  }
+
   type User {
     id: ID!
     firstName: String
     lastName: String
     email: String!
     password: String!
-    userHandle: String
-    rating: Int
-    songs: [Song!]
+    userName: String
+    photoUrl: String
+    homeAirports: [Location]
+    itineraries: [Itinerary]
+    adminLegs: [Leg]
+    adminGroups: [Group]
+    memberships: [Membership]
+  }
+  type Group {
+    title: String
+    members: [User]
+  }
+  type Membership {
+    company: Company
+  }
+  type Company {
+    name: String!
+    photoUrl: String
   }
 `
 

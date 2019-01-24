@@ -19,30 +19,17 @@ export const userResolver = {
       const response = await User.findByIdAndDelete(id)
       return !!response
     },
-    signUp: async (root, { email, password, userHandle }, { models }) => {
-      const oldUser = await User.findOne({ email })
-      if (oldUser) throw new Error("that user already exists")
-      const newUser = await User.create({ email, password, userHandle })
-      const token = jwt.sign({ userId: newUser._id }, process.env.JWT_SECRET, {
-        expiresIn: "24h"
+    updateMe: async (_, args, { models, me }) => {
+      console.log("me", me)
+      const updatedUser = await User.findByIdAndUpdate(me._id, args, {
+        new: true
       })
-      return { jwt: token }
+      console.log(updatedUser)
+      return updatedUser
     }
-    // deleteAllUsers: async (root, { secretWord }) => {
-    //   if (secretWord === process.env.SECRET_DELETE_WORD) {
-    //     const { deletedCount } = await User.deleteMany()
-    //     return `users deleted: ${deletedCount}`
-    //   } else {
-    //     return "no way jose"
-    //   }
-    // }
   },
   User: {
-    id: user => user._id,
-    songs: async (user, args, { models: { User } }) => {
-      const { songs } = await User.findById(user.id).populate("songs")
-      return songs
-    }
+    id: user => user._id
   }
 }
 

@@ -4,10 +4,21 @@ const Schema = mongoose.Schema
 const ObjectId = Schema.Types.ObjectId
 //
 
+const membershipSchema = new Schema({
+  company: { type: ObjectId, ref: "Company" },
+  memberNumber: String,
+  status: String
+})
+const groupSchema = new Schema({
+  title: { type: String, required: true },
+  members: [{ type: ObjectId, ref: "User" }]
+})
+
+// info about subdocs:  https://mongoosejs.com/docs/subdocs.html
+
 export const userSchema = new Schema({
   firstName: String,
   lastName: String,
-  rating: Number,
   email: {
     type: String,
     required: true,
@@ -18,12 +29,12 @@ export const userSchema = new Schema({
     required: true,
     trim: true
   },
-  userHandle: String,
+  userName: String,
   photoUrl: String,
-  propsals: [{ type: ObjectId, ref: "Proposal" }],
-  stems: [{ type: ObjectId, ref: "Stem" }],
-  songs: [{ type: ObjectId, ref: "Song" }],
-  permissions: [String]
+  memberships: [membershipSchema],
+  adminGroups: [groupSchema],
+  homeAirports: [{ type: ObjectId, ref: "Location" }],
+  authorizedAdmins: [{ type: ObjectId, ref: "User" }]
 })
 
 userSchema.pre("save", function(next) {
@@ -38,6 +49,11 @@ userSchema.pre("save", function(next) {
   })
 })
 
-const User = mongoose.model("User", userSchema)
+let User = mongoose.model("User", userSchema)
+// try {
+//   User = mongoose.model("User")
+// } catch (error) {
+//   User = mongoose.model("User", userSchema)
+// }
 
 export default User

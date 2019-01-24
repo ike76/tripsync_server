@@ -1,4 +1,5 @@
 import User from "./user.model"
-import Song from "./song.model"
+import mongoose from "mongoose"
+
 //
-export default { User, Song }
+export default { User }

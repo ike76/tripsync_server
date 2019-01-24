@@ -1,16 +1,16 @@
 import userResolver from "./user.resolver"
-import songResolver from "./song.resolver"
-
+import testResolver from "./test.resolver"
+import authResolver from "./auth.resolver"
+import flightOGResolver from "./flightOG.resolver"
+import itineraryResolver from "./itinerary.resolver"
 const baseResolver = {
   Mutation: {
-    wipeData: async (_, { secretWord }, { models: { User, Song } }) => {
+    wipeData: async (_, { secretWord }, { models: { User } }) => {
       console.log("wipe data")
       if (secretWord === process.env.SECRET_DELETE_WORD) {
         const { deletedCount: usersDeleted } = await User.deleteMany()
-        const { deletedCount: songsDeleted } = await Song.deleteMany()
         console.log("usersDeleted", usersDeleted)
-        console.log("songsDeleted", songsDeleted)
-        return `users deleted: ${usersDeleted} // songs deleted: ${songsDeleted}`
+        return `users deleted: ${usersDeleted} // `
       } else {
         return "no way jose"
       }
@@ -18,4 +18,11 @@ const baseResolver = {
   }
 }
 
-export default [baseResolver, userResolver, songResolver]
+export default [
+  baseResolver,
+  userResolver,
+  testResolver,
+  authResolver,
+  flightOGResolver,
+  itineraryResolver
+]
