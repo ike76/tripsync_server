@@ -5,9 +5,11 @@ const itinerarySchema = gql`
     createItinerary(name: String!): Itinerary
   }
   type Itinerary {
-    id: ID!
+    id: ID
+    amadeusID: ID
+    saved: Boolean!
     name: String
-    price: Float
+    price: String
     paymentMethod: String
     bookDate: DateTime
     confirmationNum: String

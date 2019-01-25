@@ -39,8 +39,10 @@ const userSchema = gql`
     company: Company
   }
   type Company {
-    name: String!
+    name: String
     photoUrl: String
+    nameShort: String
+    airlineCode: String
   }
 `
 

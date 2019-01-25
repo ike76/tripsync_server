@@ -3,6 +3,8 @@ import testResolver from "./test.resolver"
 import authResolver from "./auth.resolver"
 import flightOGResolver from "./flightOG.resolver"
 import itineraryResolver from "./itinerary.resolver"
+import locationResolver from "./location.resolver"
+import flightSearchResolver from "./flightSearch.resolver"
 const baseResolver = {
   Mutation: {
     wipeData: async (_, { secretWord }, { models: { User } }) => {
@@ -24,5 +26,7 @@ export default [
   testResolver,
   authResolver,
   flightOGResolver,
-  itineraryResolver
+  flightSearchResolver,
+  itineraryResolver,
+  locationResolver
 ]
