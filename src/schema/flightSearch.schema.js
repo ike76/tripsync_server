@@ -13,6 +13,7 @@ const flightSearchSchema = gql`
     departDate: String!
     returnDate: String
     oneWay: Boolean
+    currency: String
   }
 `
 

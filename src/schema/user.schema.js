@@ -38,12 +38,6 @@ const userSchema = gql`
   type Membership {
     company: Company
   }
-  type Company {
-    name: String
-    photoUrl: String
-    nameShort: String
-    airlineCode: String
-  }
 `
 
 export default userSchema

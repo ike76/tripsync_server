@@ -2,8 +2,10 @@ import mongoose, { Schema } from "mongoose"
 
 const companySchema = new Schema({
   name: String,
-  nameShort: String,
-  photoUrl: String,
+  name2: String,
+  iata: String,
+  icao: String,
+  country: String,
   airlineCode: String
 })
 

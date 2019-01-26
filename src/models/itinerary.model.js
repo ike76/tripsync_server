@@ -7,6 +7,7 @@ const itinerarySchema = new Schema({
   paymentMethod: String,
   bookDate: String,
   confirmationNum: String,
+  amadeusId: String,
   priceQuotes: [{ type: ObjectId, ref: "PriceQuote" }],
   travelers: [{ type: ObjectId, ref: "User" }],
   rides: [{ type: ObjectId, ref: "Ride" }]

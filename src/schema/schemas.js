@@ -8,6 +8,7 @@ import testSchema from "./test.schema"
 import authSchema from "./auth.schema.js"
 import flightOGSchema from "./flightOG.schema"
 import flightSearchSchema from "./flightSearch.schema"
+import companySchema from "./company.schema"
 const linkSchema = gql`
   type Query {
     _: Boolean
@@ -31,5 +32,6 @@ export default [
   testSchema,
   authSchema,
   flightOGSchema,
-  flightSearchSchema
+  flightSearchSchema,
+  companySchema
 ]
