@@ -1,72 +1,31 @@
 import chalk from "chalk"
+import mongoose from "mongoose"
+const ObjectId = mongoose.Types.ObjectId
+//
 import { fakeResults } from "../amadeusAPI/testResponse"
+import fakeResults2 from "../amadeusAPI/fakeResponse"
 import {
   parseResults,
-  getAirlineInfo,
   getFlights,
   getAirportsFromResults
 } from "../amadeusAPI/amadeus_handler"
-import Company from "../models/company.model"
-import Location from "../models/location.model"
-import npmAirports from "airports"
 import moment from "moment"
-
-// async function lookupCompany(carrierCode) {
-//   //   if (companiesLocal[carrierCode]) {
-//   //     console.log(`grabbing airline ${carrierCode} from local`)
-//   //     return companiesLocal[carrierCode]
-//   //   }
-//   if (!carrierCode) console.log(chalk.red("no carrier Code!!"))
-//   let company = await Company.findOne({
-//     airlineCode: carrierCode
-//   }).catch(err => console.log("ERROR line 14", err))
-//   if (!!company) {
-//     console.log(chalk.blue(`company ${carrierCode} found in DB`), Date.now())
-//   } else {
-//     console.log(chalk.red("creating company"))
-//     const { data } = await getAirlineInfo(carrierCode)
-//     company = await Company.create({
-//       name: data.businessName,
-//       nameShort: data.commonName,
-//       airlineCode: carrierCode,
-//       photoUrl: `https://images.kiwi.com/airlines/64/${carrierCode}.png`
-//     }).catch(err => console.log("ERROR line 25", err))
-//   }
-//   companiesLocal[carrierCode] = company
-//   return company
-// }
-
-// async function lookupAirport(iataCode) {
-//   if (airportsLocal[iataCode]) {
-//     console.log(`grabbing airport ${iataCode} from local`)
-//     return airportsLocal[iataCode]
-//   }
-//   let airport = await Location.findOne({ airportCode: iataCode })
-//   if (!airport) {
-//     console.log(chalk.red(`creating airport ${iataCode} in DB`))
-//     const { lat, lon, name } = npmAirports.find(ap => ap.iata === iataCode)
-//     console.log("lat lng name", lat, lon, name)
-//     airport = await Location.create({
-//       airportCode: iataCode,
-//       locType: "airport",
-//       name,
-//       lat,
-//       lng: lon
-//     }).catch(err => console.log("ERROR line 47", err))
-//   } else {
-//     console.log(chalk.green(`airport ${iataCode} found in DB`), Date.now())
-//   }
-//   //   console.log(chalk.bgBlue(airportsLocal[iataCode]))
-//   airportsLocal[iataCode] = airport
-//   //   console.log(chalk.bgCyan(airportsLocal[iataCode]))
-//   return airport
-// }
+import User from "../models/user.model"
 
 const flightSearchResolver = {
   Query: {
     flightSearch: async (p, { input }, ctx) => {
-      const { origin, destination, departDate, returnDate, currency } = input
-      // format dates for search
+      const {
+        origin,
+        destination,
+        departDate,
+        returnDate,
+        currency,
+        travelerIds
+      } = input
+      // 👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇
+      const useRealCall = true
+      // turn this 👆 on to call 👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆
 
       const departDateF =
         departDate && moment(Number(departDate)).format("YYYY-MM-DD")
@@ -74,25 +33,41 @@ const flightSearchResolver = {
         returnDate && moment(Number(returnDate)).format("YYYY-MM-DD")
       console.log(
         "info for search",
-        chalk.red(origin, destination, departDateF, returnDateF, currency)
+        chalk.red(origin, destination, departDateF, returnDateF)
       )
-      const rawResults = await getFlights({
-        origin,
-        destination,
-        departureDate: departDateF,
-        returnDate: returnDateF,
-        currency
+      let results
+      if (useRealCall) {
+        results = await getFlights({
+          origin,
+          destination,
+          departureDate: departDateF,
+          returnDate: returnDateF,
+          currency
+        })
+      } else {
+        results = fakeResults2
+      }
+      const [airlines, airports] = await getAirportsFromResults(results)
+
+      const travelers = await User.find({
+        _id: { $in: travelerIds.map(tid => ObjectId(tid)) }
       })
-      const [airlines, airports] = await getAirportsFromResults(rawResults)
-      console.log("airlines", airlines)
-      console.log("airports", airports)
-      const response = parseResults(rawResults)
-      const itineraries = response.parsed.map(opt =>
-        createItineraryFromOption(opt)
+
+      const response = parseResults(results)
+      const itineraries = response.parsed.map(option =>
+        createItineraryFromOption(option)
       )
+
       return itineraries
-      function createRideFromSegment({ flightSegment }) {
-        const { carrierCode, arrival, departure, number } = flightSegment
+
+      function createRideFromSegment(segment) {
+        const {
+          carrierCode,
+          arrival,
+          departure,
+          number,
+          duration
+        } = segment.flightSegment
         const origin = airports.find(
           ap => ap.airportCode === departure.iataCode
         )
@@ -108,25 +83,22 @@ const flightSearchResolver = {
           arrivalTime: arrival.at,
           lastUpdated: Date.now(),
           origin,
-          destination
+          destination,
+          duration
         }
         return ride
       }
       function createItineraryFromOption(option) {
-        const rides = option.segments.map(segment =>
-          createRideFromSegment(segment)
-        )
+        const ridesArr = option.segments.map(segments => {
+          return segments.map(segment => createRideFromSegment(segment))
+        })
         return {
-          //         id: ID!,
-          amadeusID: "1234",
-          // name: String,
+          amadeusID: option.id,
           price: option.price.total,
-          // paymentMethod: String,
-          // bookDate: DateTime,
-          // confirmationNum: String,
-          // priceQuotes: [PriceQuote],
-          // travelers: [User!],
-          rides
+          taxes: option.price,
+          travelers,
+          rides: ridesArr[0],
+          returnRides: ridesArr[1] // rides is an array now
         }
       }
     }

@@ -16,6 +16,7 @@ const itinerarySchema = gql`
     priceQuotes: [PriceQuote]
     travelers: [User!]
     rides: [Ride]
+    returnRides: [Ride]
   }
   type DateTime {
     unix: Int!

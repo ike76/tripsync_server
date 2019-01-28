@@ -13,7 +13,7 @@ export const userResolver = {
   },
   Mutation: {
     createUser: async (root, args, ctx) => {
-      return User.create(args)
+      return User.create(args.input)
     },
     deleteUser: async (root, { id }) => {
       const response = await User.findByIdAndDelete(id)

@@ -8,9 +8,10 @@ const flightSearchSchema = gql`
   }
 
   input FlightSearchInput {
+    travelerIds: [ID!]!
     origin: String!
     destination: String!
-    departDate: String!
+    departDate: String
     returnDate: String
     oneWay: Boolean
     currency: String

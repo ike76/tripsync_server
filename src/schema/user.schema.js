@@ -16,7 +16,14 @@ const userSchema = gql`
       photoUrl: String
     ): User
   }
-
+  input UserInput {
+    firstName: String
+    lastName: String
+    email: String
+    password: String
+    userName: String
+    photoUrl: String
+  }
   type User {
     id: ID!
     firstName: String

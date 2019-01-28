@@ -5,11 +5,12 @@ const rideSchema = gql`
     type: RideType!
     name: String
     company: Company
-    departureTime: DateTime
-    arrivalTime: DateTime
-    lastUpdated: DateTime
+    departureTime: String
+    arrivalTime: String
+    lastUpdated: String
     origin: Location
     destination: Location
+    duration: String
   }
   enum RideType {
     FLIGHT
