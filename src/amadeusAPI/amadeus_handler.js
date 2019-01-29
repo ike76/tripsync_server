@@ -12,6 +12,7 @@ export function getAirlineInfo(iataCode) {
   })
 }
 
+// send flight info to amadeus and get results back.
 export const getFlights = async ({
   origin,
   destination,
@@ -33,44 +34,37 @@ export const getFlights = async ({
       return response
     })
     .catch(err => console.log(chalk.red("ERROR in amadeus"), err))
-  // console.log("response", response)
 }
-export const parseResults = rawResults => {
+
+export const parseResults = async rawResults => {
+  // rawResults comes back from amadeus
   const { data } = rawResults
 
   function parseOffer(offer) {
     // offer.offerItems.length is always 1
     const { price, services } = offer.offerItems[0]
+    const segments = services.map(service => service.segments)
+    // if oneWay segments.length is 1.   roundtrip means segments.length == 2
     return {
       id: offer.id,
       price,
-      segments: services.map(service => service.segments)
+      segments
     }
   }
-  // TODO paginate results here if needed.  data.slice(???).map etc . . .
   const parsed = data.map(offer => parseOffer(offer))
-  return { parsed }
+  const [airlines, airports] = await getAirportsAndAirlinesInfo(rawResults)
+  return { parsed, airlines, airports }
 }
-export async function getAirportsFromResults(results) {
-  const { parsed } = parseResults(results)
-  const airportCodes = []
-  const airlineCodes = []
-  parsed.forEach(itin => {
-    itin.segments.forEach(segmentArray => {
-      segmentArray.forEach(seg => {
-        const depCode = seg.flightSegment.departure.iataCode
-        const arrCode = seg.flightSegment.arrival.iataCode
-        if (!airportCodes.includes(depCode)) airportCodes.push(depCode)
-        if (!airportCodes.includes(arrCode)) airportCodes.push(arrCode)
-        const carrierCode = seg.flightSegment.carrierCode
-        const opCarrierCode = seg.flightSegment.operating.carrierCode
-        if (!airlineCodes.includes(carrierCode)) airlineCodes.push(carrierCode)
-        if (!airlineCodes.includes(opCarrierCode))
-          airlineCodes.push(opCarrierCode)
-      })
-    })
-  })
-  //
+
+export async function getAirportsAndAirlinesInfo(rawResults) {
+  // to get info about airlines and airports ONCE, without making multiple calls to DB for each flight.
+  // TODO replace this with the 'library' info at the end of the raw result.
+  const { dictionaries } = rawResults
+  const { aircraft, carriers, locations } = dictionaries
+
+  const airportCodes = Object.keys(locations)
+  const airlineCodes = Object.keys(carriers)
+
   const airports = Promise.all(
     airportCodes.map(async iata => {
       let airport = await Location.findOne({ airportCode: iata })
@@ -82,6 +76,7 @@ export async function getAirportsFromResults(results) {
           iata,
           locType: "airport",
           name,
+          nameShort: locations[iata].detailedName,
           lat,
           lng: lon
         }).catch(err => console.log("ERROR line 47", err))
@@ -95,7 +90,7 @@ export async function getAirportsFromResults(results) {
     airlineCodes.map(airlineCode => {
       return Company.findOne({ airlineCode }).then(company => {
         if (company) {
-          console.log(chalk.green(`airline ${airlineCode} found in DB`))
+          console.log(chalk.blue(`airline ${airlineCode} found in DB`))
           return company
         }
         if (!company) {
