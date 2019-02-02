@@ -16,6 +16,12 @@ const groupSchema = new Schema({
 
 // info about subdocs:  https://mongoosejs.com/docs/subdocs.html
 
+// const myLocSchema = new Schema({
+//   location: { type: ObjectId, ref: "Location" },
+//   notes: [String]
+//   // whatever else about 'my' relationship to this location.
+// })
+
 export const userSchema = new Schema({
   firstName: String,
   lastName: String,
@@ -33,6 +39,9 @@ export const userSchema = new Schema({
   photoUrl: String,
   memberships: [membershipSchema],
   adminGroups: [groupSchema],
+  adminTravelers: [{ type: ObjectId, ref: "User" }],
+  // adminAirports: [myLocSchema],
+  adminLocs: [{ type: ObjectId, ref: "AdminLoc" }],
   homeAirports: [{ type: ObjectId, ref: "Location" }],
   authorizedAdmins: [{ type: ObjectId, ref: "User" }]
 })
@@ -50,10 +59,11 @@ userSchema.pre("save", function(next) {
 })
 
 let User = mongoose.model("User", userSchema)
-// try {
-//   User = mongoose.model("User")
-// } catch (error) {
-//   User = mongoose.model("User", userSchema)
-// }
-
 export default User
+
+const adminLocSchema = new Schema({
+  location: { type: ObjectId, ref: "Location" },
+  notes: [String],
+  admins: [{ type: ObjectId, ref: "User" }]
+})
+export const AdminLoc = mongoose.model("AdminLoc", adminLocSchema)

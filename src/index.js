@@ -7,6 +7,7 @@ import schemaArray from "./schema/schemas"
 import resolvers from "./resolvers/resolvers"
 import mongoose from "mongoose"
 import getUserByToken from "./helpers/getUserByToken"
+import chalk from "chalk"
 const app = express()
 app.use(cors())
 

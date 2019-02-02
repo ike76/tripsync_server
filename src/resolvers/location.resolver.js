@@ -1,4 +1,5 @@
 import Location from "../models/location.model"
+import User from "../models/user.model"
 import airports from "../amadeusAPI/filteredAirports.json"
 const locationResolver = {
   Mutation: {

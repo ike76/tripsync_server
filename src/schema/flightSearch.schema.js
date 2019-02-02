@@ -5,6 +5,16 @@ import { gql } from "apollo-server-express"
 const flightSearchSchema = gql`
   extend type Query {
     flightSearch(input: FlightSearchInput): [Itinerary]
+    airportAutocomplete(searchText: String, limit: Int): [Airport]
+  }
+  type Airport {
+    name: String
+    airportCode: String
+    city: String
+    state: String
+    country: String
+    lat: String
+    lng: String
   }
 
   input FlightSearchInput {

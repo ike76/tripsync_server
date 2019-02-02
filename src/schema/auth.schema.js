@@ -16,6 +16,7 @@ const authSchema = gql`
   }
   extend type Query {
     signIn(email: String!, password: String!): Token
+    me: User
   }
   type Token {
     jwt: String!
