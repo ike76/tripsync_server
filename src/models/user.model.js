@@ -30,6 +30,8 @@ export const userSchema = new Schema({
     required: true,
     trim: true
   },
+  phoneNumber: String,
+  phoneNumber2: String,
   password: {
     type: String,
     required: true,
@@ -37,6 +39,11 @@ export const userSchema = new Schema({
   },
   userName: String,
   photoUrl: String,
+  homeAddress: {
+    street: String,
+    lat: Number,
+    lng: Number
+  },
   memberships: [membershipSchema],
   adminGroups: [groupSchema],
   adminTravelers: [{ type: ObjectId, ref: "User" }],

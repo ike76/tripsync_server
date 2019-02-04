@@ -4,13 +4,40 @@ import mongoose from "mongoose"
 const ObjectId = mongoose.Types.ObjectId
 
 import { findOrCreateAirports } from "../controllers/Location.controller"
+import Location from "../models/location.model"
 export const userResolver = {
   Query: {
     user: async (parent, { id }, { models: { User } }) => {
       return User.findById(id)
     },
-    users: (_, __, { models }) => {
-      return models.User.find({})
+    users: (_, { userIds }, { models }) => {
+      console.log("called with", userIds)
+      // return a list of users
+      return User.find({
+        _id: { $in: userIds }
+      })
+    },
+    getAdminLocsFromAirportCodes: async (
+      _,
+      { airportCode },
+      { models, me }
+    ) => {
+      console.log(`looking for airport ${airportCode}`)
+      //  see if there is a location in db already.
+      let location = await Location.findOne({ airportCode })
+      if (!location) {
+      }
+      if (location) {
+        let adminLoc = await AdminLoc.findOne({ location })
+        if (adminLoc) {
+          return adminLoc
+        } else {
+          adminLoc = await AdminLoc.create({ location })
+        }
+      } else {
+      }
+      // if so, is there an adminLoc?   if so return adminLoc
+      // if not, create location
     }
   },
   Mutation: {
@@ -40,15 +67,22 @@ export const userResolver = {
       })
       return newUser
     },
-    updateUser: async (root, { input, userId }, { me, models }) => {
+    updateUser: async (
+      root,
+      { input, homeAddressInput, userId },
+      { me, models }
+    ) => {
       //TODO am i authorized to update this user?
-      const { homeAirports: airportCodes } = input
-      const homeAirportsFilled = await findOrCreateAirports(airportCodes)
-      let updatedUser = await User.findByIdAndUpdate(
-        userId,
-        { ...input, homeAirports: homeAirportsFilled },
-        { new: true }
-      )
+      console.log("update User input", input)
+      console.log("update User HomeAddyInput", homeAddressInput)
+
+      if (input.homeAirports) {
+        input.homeAirports = await findOrCreateAirports(input.homeAirports)
+      }
+      const updateObj = { ...input, homeAddress: homeAddressInput }
+      let updatedUser = await User.findByIdAndUpdate(userId, updateObj, {
+        new: true
+      })
       return updatedUser
     },
     deleteUser: async (root, { id }) => {
@@ -81,6 +115,7 @@ export const userResolver = {
       const mePopulated = await User.findById(me._id).populate("adminTravelers")
       return mePopulated.adminTravelers
     },
+
     // adminAirports: async (user, __, { models, me }) => {
     //   const mePop = await User.findById(me._id).populate({
     //     path: "adminAirports"

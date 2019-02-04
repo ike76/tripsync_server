@@ -4,14 +4,19 @@ const userSchema = gql`
   extend type Query {
     # me: User
     user(id: ID!): User
-    users: [User!]
+    users(userIds: [ID!]): [User!]
+    getAdminLocsFromAirportCodes(airportCodes: [String!]): [AdminLoc]
   }
   extend type Mutation {
     # add traveler that already existed before
     addTraveler(userId: ID!): User
     # create new traveler and add to my list
     createTraveler(input: UserInput!): User
-    updateUser(input: UserInput!, userId: ID!): User
+    updateUser(
+      input: UserInput
+      homeAddressInput: HomeAddressInput
+      userId: ID!
+    ): User
     deleteUser(id: ID!): Boolean
     updateMe(
       firstName: String
@@ -37,14 +42,28 @@ const userSchema = gql`
     photoUrl: String
     homeAirports: [String!]
   }
+  input HomeAddressInput {
+    street: String
+    lat: Int
+    lng: Int
+  }
+  type HomeAddress {
+    street: String
+    lat: Int
+    lng: Int
+  }
+
   type User {
     id: ID!
     firstName: String
     lastName: String
     email: String!
+    phoneNumber: String
+    phoneNumber2: String
     password: String!
     userName: String
     photoUrl: String
+    homeAddress: HomeAddress
     homeAirports: [Location]
     # adminAirports: [AdminLoc]
     adminLocs(limit: Int): [AdminLoc]
@@ -65,6 +84,7 @@ const userSchema = gql`
   }
   type Membership {
     company: Company
+    memberNumber: String
   }
 `
 
