@@ -3,15 +3,54 @@ import chalk from "chalk"
 import Location from "../models/location.model"
 import npmAirports from "airports"
 import airlinesObj from "./airlinesObj.json"
+import nearbyAirportsFake from "./nearbyAirportsFake.json"
 import Company from "../models/company.model"
 import { amadeus } from "./amadeus_instance"
-import fs from "fs"
+import Amadeus from "amadeus"
 export function getAirlineInfo(iataCode) {
   return amadeus.referenceData.airlines.get({
     airlineCodes: iataCode
   })
 }
 
+export async function getParsedAirportInfo(airportCode) {
+  const apObj = await getAirportInfo(airportCode).then(({ data }) => data[0])
+  return parseAmadeusAirportObj(apObj)
+}
+
+export async function getAirportInfo(airportCode) {
+  console.log(chalk.red("calling amadeus for info on", airportCode))
+  const airportInfo = await amadeus.referenceData.locations
+    .get({
+      keyword: airportCode,
+      subType: Amadeus.location.airport
+    })
+    .catch(err => console.log("amadeus error", err))
+  // console.log("airportInfo", airportInfo)
+  return airportInfo
+}
+
+export function getNearbyAirports({ lat, lng, fake }) {
+  if (fake) return Promise.resolve(nearbyAirportsFake)
+  return amadeus.referenceData.locations.airports.get({
+    longitude: lng,
+    latitude: lat
+  })
+}
+
+export function parseAmadeusAirportObj(apObj) {
+  if (apObj.subType !== "AIRPORT") throw new Error("thats not an airport")
+  return {
+    airportCode: apObj.iataCode,
+    lat: apObj.geoCode.latitude,
+    lng: apObj.geoCode.longitude,
+    name: apObj.name,
+    city: apObj.address.cityName,
+    state: apObj.address.stateCode,
+    country: apObj.address.countryCode,
+    locType: "airport"
+  }
+}
 // send flight info to amadeus and get results back.
 export const getFlights = async ({
   origin,

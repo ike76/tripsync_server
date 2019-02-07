@@ -15,8 +15,9 @@ const server = new ApolloServer({
   typeDefs: schemaArray,
   resolvers,
   context: async ({ req }) => {
-    const token = req.headers.authorization || ""
-    const me = (await getUserByToken(token)) || null
+    const authToken = req.headers.authorization || ""
+    const refreshToken = req.headers.refresh || ""
+    const me = (await getUserByToken(authToken, refreshToken)) || null
     return { models, me }
   }
 })
@@ -27,10 +28,10 @@ const { DEV_PORT, TEST_PORT } = process.env
 const PORT = process.env.TEST_DB ? TEST_PORT : DEV_PORT
 
 mongoose
-  .connect(
-    process.env.TEST_DB || process.env.PROD_DB,
-    { useNewUrlParser: true, useFindAndModify: false }
-  )
+  .connect(process.env.TEST_DB || process.env.PROD_DB, {
+    useNewUrlParser: true,
+    useFindAndModify: false
+  })
   .then(response => {
     app.listen(PORT, () => {
       const message = !!process.env.TEST_DB

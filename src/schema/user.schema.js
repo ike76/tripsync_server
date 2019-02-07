@@ -11,13 +11,13 @@ const userSchema = gql`
     # add traveler that already existed before
     addTraveler(userId: ID!): User
     # create new traveler and add to my list
-    createTraveler(input: UserInput!): User
+    createTraveler(input: UserInput, homeAddressInput: HomeAddressInput): User
     updateUser(
       input: UserInput
       homeAddressInput: HomeAddressInput
       userId: ID!
     ): User
-    deleteUser(id: ID!): Boolean
+    deleteUser(userId: ID!): ID
     updateMe(
       firstName: String
       lastName: String
@@ -26,13 +26,10 @@ const userSchema = gql`
       photoUrl: String
     ): User
     updateAdminLoc(input: AdminLocInput!): AdminLoc
+    addFreqAirport(userId: ID!, airportCode: String!): AdminLoc
+    removeFreqAirport(adminLocId: ID!, userId: ID!): String
   }
-  input AdminLocInput {
-    adminLocId: ID!
-    notes: [String]
-    # TODO add some way to add admins to a single location
-    # so you can collaborate on loc details.  (where to pick up at airport,  where to load in venue etc)
-  }
+
   input UserInput {
     firstName: String
     lastName: String
@@ -40,17 +37,19 @@ const userSchema = gql`
     password: String
     userName: String
     photoUrl: String
-    homeAirports: [String!]
+    phoneNumber: String
+    phoneNumber2: String
   }
   input HomeAddressInput {
     street: String
-    lat: Int
-    lng: Int
+    lat: Float
+    lng: Float
   }
   type HomeAddress {
     street: String
-    lat: Int
-    lng: Int
+    cityState: String
+    lat: Float
+    lng: Float
   }
 
   type User {
@@ -64,7 +63,7 @@ const userSchema = gql`
     userName: String
     photoUrl: String
     homeAddress: HomeAddress
-    homeAirports: [Location]
+    freqAirports: [AdminLoc]
     # adminAirports: [AdminLoc]
     adminLocs(limit: Int): [AdminLoc]
     itineraries: [Itinerary]
@@ -73,10 +72,20 @@ const userSchema = gql`
     adminTravelers: [User]
     memberships: [Membership]
   }
+  input AdminLocInput {
+    adminLocId: ID!
+    notes: [String]
+    use: Boolean
+
+    # TODO add some way to add admins to a single location
+    # so you can collaborate on loc details.  (where to pick up at airport,  where to load in venue etc)
+  }
   type AdminLoc {
     id: ID!
-    location: Location!
+    location: Location
+    use: Boolean
     notes: [String]
+    ownerAdmin: ID
   }
   type Group {
     title: String

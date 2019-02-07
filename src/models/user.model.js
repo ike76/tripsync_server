@@ -34,13 +34,13 @@ export const userSchema = new Schema({
   phoneNumber2: String,
   password: {
     type: String,
-    required: true,
     trim: true
   },
   userName: String,
   photoUrl: String,
   homeAddress: {
     street: String,
+    cityState: String,
     lat: Number,
     lng: Number
   },
@@ -48,13 +48,14 @@ export const userSchema = new Schema({
   adminGroups: [groupSchema],
   adminTravelers: [{ type: ObjectId, ref: "User" }],
   // adminAirports: [myLocSchema],
-  adminLocs: [{ type: ObjectId, ref: "AdminLoc" }],
-  homeAirports: [{ type: ObjectId, ref: "Location" }],
+  adminLocs: [{ type: ObjectId, ref: "AdminLoc", unique: true }],
+  freqAirports: [{ type: ObjectId, ref: "AdminLoc" }],
   authorizedAdmins: [{ type: ObjectId, ref: "User" }]
 })
 
 userSchema.pre("save", function(next) {
   const user = this
+  if (!user.password) return next()
   bcrypt.hash(user.password, 10, function(err, hash) {
     if (err) {
       console.log(err)
@@ -71,6 +72,13 @@ export default User
 const adminLocSchema = new Schema({
   location: { type: ObjectId, ref: "Location" },
   notes: [String],
+  // "use" is a checkbox.  do i USE this place?
+  use: {
+    type: Boolean,
+    default: true
+  },
+  // TODO - list of times you've been here.  notes in visits?
+  ownerAdmin: { type: ObjectId, ref: "User" },
   admins: [{ type: ObjectId, ref: "User" }]
 })
 export const AdminLoc = mongoose.model("AdminLoc", adminLocSchema)

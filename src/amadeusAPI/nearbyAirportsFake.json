@@ -1,0 +1,703 @@
+{
+  "contentType": "application/vnd.amadeus+json",
+  "statusCode": 200,
+  "request": {
+    "host": "test.api.amadeus.com",
+    "port": 443,
+    "ssl": true,
+    "scheme": "https",
+    "verb": "GET",
+    "path": "/v1/reference-data/locations/airports",
+    "params": {
+      "longitude": -86.75086899999997,
+      "latitude": 36.03888999999999
+    },
+    "queryPath": "/v1/reference-data/locations/airports?longitude=-86.75086899999997&latitude=36.03888999999999",
+    "bearerToken": "FGtFuNOfBeaMTyIUsAKYGBXKGjCc",
+    "clientVersion": "3.0.0",
+    "languageVersion": "10.13.0",
+    "appId": null,
+    "appVersion": null,
+    "headers": {
+      "User-Agent": "amadeus-node/3.0.0 node/10.13.0",
+      "Accept": "application/json, application/vnd.amadeus+json",
+      "Authorization": "Bearer FGtFuNOfBeaMTyIUsAKYGBXKGjCc"
+    }
+  },
+  "body": "{\n    \"meta\": {\n        \"count\": 45,\n        \"links\": {\n            \"self\": \"https://test.api.amadeus.com/v1/reference-data/locations/airports?latitude=36.03888999999999&longitude=-86.75086899999997\",\n            \"next\": \"https://test.api.amadeus.com/v1/reference-data/locations/airports?latitude=36.03888999999999&longitude=-86.75086899999997&page%5Boffset%5D=10\",\n            \"last\": \"https://test.api.amadeus.com/v1/reference-data/locations/airports?latitude=36.03888999999999&longitude=-86.75086899999997&page%5Boffset%5D=35\"\n        }\n    },\n    \"data\": [\n        {\n            \"type\": \"location\",\n            \"subType\": \"AIRPORT\",\n            \"name\": \"INTERNATIONAL\",\n            \"detailedName\": \"NASHVILLE/TN/US:INTERNATIONAL\",\n            \"timeZoneOffset\": \"-06:00\",\n            \"iataCode\": \"BNA\",\n            \"geoCode\": {\n                \"latitude\": 36.11950,\n                \"longitude\": -86.68416\n            },\n            \"address\": {\n                \"cityName\": \"NASHVILLE\",\n                \"cityCode\": \"BNA\",\n                \"countryName\": \"UNITED STATES OF AMERICA\",\n                \"countryCode\": \"US\",\n                \"stateCode\": \"TN\",\n                \"regionCode\": \"NAMER\"\n            },\n            \"distance\": {\n                \"value\": 10,\n                \"unit\": \"KM\"\n            },\n            \"analytics\": {\n                \"flights\": {\n                    \"score\": 11\n                },\n                \"travelers\": {\n                    \"score\": 8\n                }\n            },\n            \"relevance\": 97.43171\n        },\n        {\n            \"type\": \"location\",\n            \"subType\": \"AIRPORT\",\n            \"name\": \"HARTSFIELD-JACKSON INT\",\n            \"detailedName\": \"ATLANTA/GA/US:HARTSFIELD-JACKS\",\n            \"timeZoneOffset\": \"-05:00\",\n            \"iataCode\": \"ATL\",\n            \"geoCode\": {\n                \"latitude\": 33.63667,\n                \"longitude\": -84.42806\n            },\n            \"address\": {\n                \"cityName\": \"ATLANTA\",\n                \"cityCode\": \"ATL\",\n                \"countryName\": \"UNITED STATES OF AMERICA\",\n                \"countryCode\": \"US\",\n                \"stateCode\": \"GA\",\n                \"regionCode\": \"NAMER\"\n            },\n            \"distance\": {\n                \"value\": 341,\n                \"unit\": \"KM\"\n            },\n            \"analytics\": {\n                \"flights\": {\n                    \"score\": 64\n                },\n                \"travelers\": {\n                    \"score\": 60\n                }\n            },\n            \"relevance\": 18.79282\n        },\n        {\n            \"type\": \"location\",\n            \"subType\": \"AIRPORT\",\n            \"name\": \"LAMBERT\",\n            \"detailedName\": \"ST LOUIS/MO/US:LAMBERT\",\n            \"timeZoneOffset\": \"-06:00\",\n            \"iataCode\": \"STL\",\n            \"geoCode\": {\n                \"latitude\": 38.74861,\n                \"longitude\": -90.37000\n            },\n            \"address\": {\n                \"cityName\": \"ST LOUIS\",\n                \"cityCode\": \"STL\",\n                \"countryName\": \"UNITED STATES OF AMERICA\",\n                \"countryCode\": \"US\",\n                \"stateCode\": \"MO\",\n                \"regionCode\": \"NAMER\"\n            },\n            \"distance\": {\n                \"value\": 439,\n                \"unit\": \"KM\"\n            },\n            \"analytics\": {\n                \"flights\": {\n                    \"score\": 15\n                },\n                \"travelers\": {\n                    \"score\": 11\n                }\n            },\n            \"relevance\": 3.31775\n        },\n        {\n            \"type\": \"location\",\n            \"subType\": \"AIRPORT\",\n            \"name\": \"NORTHERN KENTUCKY INTL\",\n            \"detailedName\": \"CINCINNATI/OH/US:NORTHERN KENT\",\n            \"timeZoneOffset\": \"-05:00\",\n            \"iataCode\": \"CVG\",\n            \"geoCode\": {\n                \"latitude\": 39.04889,\n                \"longitude\": -84.66778\n            },\n            \"address\": {\n                \"cityName\": \"CINCINNATI\",\n                \"cityCode\": \"CVG\",\n                \"countryName\": \"UNITED STATES OF AMERICA\",\n                \"countryCode\": \"US\",\n                \"stateCode\": \"OH\",\n                \"regionCode\": \"NAMER\"\n            },\n            \"distance\": {\n                \"value\": 382,\n                \"unit\": \"KM\"\n            },\n            \"analytics\": {\n                \"flights\": {\n                    \"score\": 7\n                },\n                \"travelers\": {\n                    \"score\": 4\n                }\n            },\n            \"relevance\": 1.95797\n        },\n        {\n            \"type\": \"location\",\n            \"subType\": \"AIRPORT\",\n            \"name\": \"INDIANAPOLIS INTL\",\n            \"detailedName\": \"INDIANAPOLIS/IN/US:INTL\",\n            \"timeZoneOffset\": \"-05:00\",\n            \"iataCode\": \"IND\",\n            \"geoCode\": {\n                \"latitude\": 39.71722,\n                \"longitude\": -86.29444\n            },\n            \"address\": {\n                \"cityName\": \"INDIANAPOLIS\",\n                \"cityCode\": \"IND\",\n                \"countryName\": \"UNITED STATES OF AMERICA\",\n                \"countryCode\": \"US\",\n                \"stateCode\": \"IN\",\n                \"regionCode\": \"NAMER\"\n            },\n            \"distance\": {\n                \"value\": 411,\n                \"unit\": \"KM\"\n            },\n            \"analytics\": {\n                \"flights\": {\n                    \"score\": 7\n                },\n                \"travelers\": {\n                    \"score\": 5\n                }\n            },\n            \"relevance\": 1.79639\n        },\n        {\n            \"type\": \"location\",\n            \"subType\": \"AIRPORT\",\n            \"name\": \"MEMPHIS INTL\",\n            \"detailedName\": \"MEMPHIS/TN/US:MEMPHIS INTL\",\n            \"timeZoneOffset\": \"-06:00\",\n            \"iataCode\": \"MEM\",\n            \"geoCode\": {\n                \"latitude\": 35.04218,\n                \"longitude\": -89.98157\n            },\n            \"address\": {\n                \"cityName\": \"MEMPHIS\",\n                \"cityCode\": \"MEM\",\n                \"countryName\": \"UNITED STATES OF AMERICA\",\n                \"countryCode\": \"US\",\n                \"stateCode\": \"TN\",\n                \"regionCode\": \"NAMER\"\n            },\n            \"distance\": {\n                \"value\": 312,\n                \"unit\": \"KM\"\n            },\n            \"analytics\": {\n                \"flights\": {\n                    \"score\": 5\n                },\n                \"travelers\": {\n                    \"score\": 3\n                }\n            },\n            \"relevance\": 1.55804\n        },\n        {\n            \"type\": \"location\",\n            \"subType\": \"AIRPORT\",\n            \"name\": \"INTL-STANDIFORD FLD\",\n            \"detailedName\": \"LOUISVILLE/KY/US:INTL-STANDIFO\",\n            \"timeZoneOffset\": \"-05:00\",\n            \"iataCode\": \"SDF\",\n            \"geoCode\": {\n                \"latitude\": 38.17444,\n                \"longitude\": -85.73611\n            },\n            \"address\": {\n                \"cityName\": \"LOUISVILLE\",\n                \"cityCode\": \"SDF\",\n                \"countryName\": \"UNITED STATES OF AMERICA\",\n                \"countryCode\": \"US\",\n                \"stateCode\": \"KY\",\n                \"regionCode\": \"NAMER\"\n            },\n            \"distance\": {\n                \"value\": 254,\n                \"unit\": \"KM\"\n            },\n            \"analytics\": {\n                \"flights\": {\n                    \"score\": 4\n                },\n                \"travelers\": {\n                    \"score\": 2\n                }\n            },\n            \"relevance\": 1.43452\n        },\n        {\n            \"type\": \"location\",\n            \"subType\": \"AIRPORT\",\n            \"name\": \"INTL-CARL T.JONES FLD\",\n            \"detailedName\": \"HUNTSVILLE/AL/US:INTL-CARL T.J\",\n            \"timeZoneOffset\": \"-06:00\",\n            \"iataCode\": \"HSV\",\n            \"geoCode\": {\n                \"latitude\": 34.63722,\n                \"longitude\": -86.77500\n            },\n            \"address\": {\n                \"cityName\": \"HUNTSVILLE\",\n                \"cityCode\": \"HSV\",\n                \"countryName\": \"UNITED STATES OF AMERICA\",\n                \"countryCode\": \"US\",\n                \"stateCode\": \"AL\",\n                \"regionCode\": \"NAMER\"\n            },\n            \"distance\": {\n                \"value\": 156,\n                \"unit\": \"KM\"\n            },\n            \"analytics\": {\n                \"flights\": {\n                    \"score\": 2\n                },\n                \"travelers\": {\n                    \"score\": 1\n                }\n            },\n            \"relevance\": 1.07267\n        },\n        {\n            \"type\": \"location\",\n            \"subType\": \"AIRPORT\",\n            \"name\": \"MCGHEE TYSON\",\n            \"detailedName\": \"KNOXVILLE/TN/US:MCGHEE TYSON\",\n            \"timeZoneOffset\": \"-05:00\",\n            \"iataCode\": \"TYS\",\n            \"geoCode\": {\n                \"latitude\": 35.80673,\n                \"longitude\": -83.99115\n            },\n            \"address\": {\n                \"cityName\": \"KNOXVILLE\",\n                \"cityCode\": \"TYS\",\n                \"countryName\": \"UNITED STATES OF AMERICA\",\n                \"countryCode\": \"US\",\n                \"stateCode\": \"TN\",\n                \"regionCode\": \"NAMER\"\n            },\n            \"distance\": {\n                \"value\": 250,\n                \"unit\": \"KM\"\n            },\n            \"analytics\": {\n                \"flights\": {\n                    \"score\": 3\n                },\n                \"travelers\": {\n                    \"score\": 1\n                }\n            },\n            \"relevance\": 1.06708\n        },\n        {\n            \"type\": \"location\",\n            \"subType\": \"AIRPORT\",\n            \"name\": \"SHUTTLESWORTH INTL\",\n            \"detailedName\": \"BIRMINGHAM/AL/US:SHUTTLESWORTH\",\n            \"timeZoneOffset\": \"-06:00\",\n            \"iataCode\": \"BHM\",\n            \"geoCode\": {\n                \"latitude\": 33.56166,\n                \"longitude\": -86.75254\n            },\n            \"address\": {\n                \"cityName\": \"BIRMINGHAM\",\n                \"cityCode\": \"BHM\",\n                \"countryName\": \"UNITED STATES OF AMERICA\",\n                \"countryCode\": \"US\",\n                \"stateCode\": \"AL\",\n                \"regionCode\": \"NAMER\"\n            },\n            \"distance\": {\n                \"value\": 275,\n                \"unit\": \"KM\"\n            },\n            \"analytics\": {\n                \"flights\": {\n                    \"score\": 3\n                },\n                \"travelers\": {\n                    \"score\": 2\n                }\n            },\n            \"relevance\": 1.02874\n        }\n    ]\n}",
+  "result": {
+    "meta": {
+      "count": 45,
+      "links": {
+        "self": "https://test.api.amadeus.com/v1/reference-data/locations/airports?latitude=36.03888999999999&longitude=-86.75086899999997",
+        "next": "https://test.api.amadeus.com/v1/reference-data/locations/airports?latitude=36.03888999999999&longitude=-86.75086899999997&page%5Boffset%5D=10",
+        "last": "https://test.api.amadeus.com/v1/reference-data/locations/airports?latitude=36.03888999999999&longitude=-86.75086899999997&page%5Boffset%5D=35"
+      }
+    },
+    "data": [
+      {
+        "type": "location",
+        "subType": "AIRPORT",
+        "name": "INTERNATIONAL",
+        "detailedName": "NASHVILLE/TN/US:INTERNATIONAL",
+        "timeZoneOffset": "-06:00",
+        "iataCode": "BNA",
+        "geoCode": {
+          "latitude": 36.1195,
+          "longitude": -86.68416
+        },
+        "address": {
+          "cityName": "NASHVILLE",
+          "cityCode": "BNA",
+          "countryName": "UNITED STATES OF AMERICA",
+          "countryCode": "US",
+          "stateCode": "TN",
+          "regionCode": "NAMER"
+        },
+        "distance": {
+          "value": 10,
+          "unit": "KM"
+        },
+        "analytics": {
+          "flights": {
+            "score": 11
+          },
+          "travelers": {
+            "score": 8
+          }
+        },
+        "relevance": 97.43171
+      },
+      {
+        "type": "location",
+        "subType": "AIRPORT",
+        "name": "HARTSFIELD-JACKSON INT",
+        "detailedName": "ATLANTA/GA/US:HARTSFIELD-JACKS",
+        "timeZoneOffset": "-05:00",
+        "iataCode": "ATL",
+        "geoCode": {
+          "latitude": 33.63667,
+          "longitude": -84.42806
+        },
+        "address": {
+          "cityName": "ATLANTA",
+          "cityCode": "ATL",
+          "countryName": "UNITED STATES OF AMERICA",
+          "countryCode": "US",
+          "stateCode": "GA",
+          "regionCode": "NAMER"
+        },
+        "distance": {
+          "value": 341,
+          "unit": "KM"
+        },
+        "analytics": {
+          "flights": {
+            "score": 64
+          },
+          "travelers": {
+            "score": 60
+          }
+        },
+        "relevance": 18.79282
+      },
+      {
+        "type": "location",
+        "subType": "AIRPORT",
+        "name": "LAMBERT",
+        "detailedName": "ST LOUIS/MO/US:LAMBERT",
+        "timeZoneOffset": "-06:00",
+        "iataCode": "STL",
+        "geoCode": {
+          "latitude": 38.74861,
+          "longitude": -90.37
+        },
+        "address": {
+          "cityName": "ST LOUIS",
+          "cityCode": "STL",
+          "countryName": "UNITED STATES OF AMERICA",
+          "countryCode": "US",
+          "stateCode": "MO",
+          "regionCode": "NAMER"
+        },
+        "distance": {
+          "value": 439,
+          "unit": "KM"
+        },
+        "analytics": {
+          "flights": {
+            "score": 15
+          },
+          "travelers": {
+            "score": 11
+          }
+        },
+        "relevance": 3.31775
+      },
+      {
+        "type": "location",
+        "subType": "AIRPORT",
+        "name": "NORTHERN KENTUCKY INTL",
+        "detailedName": "CINCINNATI/OH/US:NORTHERN KENT",
+        "timeZoneOffset": "-05:00",
+        "iataCode": "CVG",
+        "geoCode": {
+          "latitude": 39.04889,
+          "longitude": -84.66778
+        },
+        "address": {
+          "cityName": "CINCINNATI",
+          "cityCode": "CVG",
+          "countryName": "UNITED STATES OF AMERICA",
+          "countryCode": "US",
+          "stateCode": "OH",
+          "regionCode": "NAMER"
+        },
+        "distance": {
+          "value": 382,
+          "unit": "KM"
+        },
+        "analytics": {
+          "flights": {
+            "score": 7
+          },
+          "travelers": {
+            "score": 4
+          }
+        },
+        "relevance": 1.95797
+      },
+      {
+        "type": "location",
+        "subType": "AIRPORT",
+        "name": "INDIANAPOLIS INTL",
+        "detailedName": "INDIANAPOLIS/IN/US:INTL",
+        "timeZoneOffset": "-05:00",
+        "iataCode": "IND",
+        "geoCode": {
+          "latitude": 39.71722,
+          "longitude": -86.29444
+        },
+        "address": {
+          "cityName": "INDIANAPOLIS",
+          "cityCode": "IND",
+          "countryName": "UNITED STATES OF AMERICA",
+          "countryCode": "US",
+          "stateCode": "IN",
+          "regionCode": "NAMER"
+        },
+        "distance": {
+          "value": 411,
+          "unit": "KM"
+        },
+        "analytics": {
+          "flights": {
+            "score": 7
+          },
+          "travelers": {
+            "score": 5
+          }
+        },
+        "relevance": 1.79639
+      },
+      {
+        "type": "location",
+        "subType": "AIRPORT",
+        "name": "MEMPHIS INTL",
+        "detailedName": "MEMPHIS/TN/US:MEMPHIS INTL",
+        "timeZoneOffset": "-06:00",
+        "iataCode": "MEM",
+        "geoCode": {
+          "latitude": 35.04218,
+          "longitude": -89.98157
+        },
+        "address": {
+          "cityName": "MEMPHIS",
+          "cityCode": "MEM",
+          "countryName": "UNITED STATES OF AMERICA",
+          "countryCode": "US",
+          "stateCode": "TN",
+          "regionCode": "NAMER"
+        },
+        "distance": {
+          "value": 312,
+          "unit": "KM"
+        },
+        "analytics": {
+          "flights": {
+            "score": 5
+          },
+          "travelers": {
+            "score": 3
+          }
+        },
+        "relevance": 1.55804
+      },
+      {
+        "type": "location",
+        "subType": "AIRPORT",
+        "name": "INTL-STANDIFORD FLD",
+        "detailedName": "LOUISVILLE/KY/US:INTL-STANDIFO",
+        "timeZoneOffset": "-05:00",
+        "iataCode": "SDF",
+        "geoCode": {
+          "latitude": 38.17444,
+          "longitude": -85.73611
+        },
+        "address": {
+          "cityName": "LOUISVILLE",
+          "cityCode": "SDF",
+          "countryName": "UNITED STATES OF AMERICA",
+          "countryCode": "US",
+          "stateCode": "KY",
+          "regionCode": "NAMER"
+        },
+        "distance": {
+          "value": 254,
+          "unit": "KM"
+        },
+        "analytics": {
+          "flights": {
+            "score": 4
+          },
+          "travelers": {
+            "score": 2
+          }
+        },
+        "relevance": 1.43452
+      },
+      {
+        "type": "location",
+        "subType": "AIRPORT",
+        "name": "INTL-CARL T.JONES FLD",
+        "detailedName": "HUNTSVILLE/AL/US:INTL-CARL T.J",
+        "timeZoneOffset": "-06:00",
+        "iataCode": "HSV",
+        "geoCode": {
+          "latitude": 34.63722,
+          "longitude": -86.775
+        },
+        "address": {
+          "cityName": "HUNTSVILLE",
+          "cityCode": "HSV",
+          "countryName": "UNITED STATES OF AMERICA",
+          "countryCode": "US",
+          "stateCode": "AL",
+          "regionCode": "NAMER"
+        },
+        "distance": {
+          "value": 156,
+          "unit": "KM"
+        },
+        "analytics": {
+          "flights": {
+            "score": 2
+          },
+          "travelers": {
+            "score": 1
+          }
+        },
+        "relevance": 1.07267
+      },
+      {
+        "type": "location",
+        "subType": "AIRPORT",
+        "name": "MCGHEE TYSON",
+        "detailedName": "KNOXVILLE/TN/US:MCGHEE TYSON",
+        "timeZoneOffset": "-05:00",
+        "iataCode": "TYS",
+        "geoCode": {
+          "latitude": 35.80673,
+          "longitude": -83.99115
+        },
+        "address": {
+          "cityName": "KNOXVILLE",
+          "cityCode": "TYS",
+          "countryName": "UNITED STATES OF AMERICA",
+          "countryCode": "US",
+          "stateCode": "TN",
+          "regionCode": "NAMER"
+        },
+        "distance": {
+          "value": 250,
+          "unit": "KM"
+        },
+        "analytics": {
+          "flights": {
+            "score": 3
+          },
+          "travelers": {
+            "score": 1
+          }
+        },
+        "relevance": 1.06708
+      },
+      {
+        "type": "location",
+        "subType": "AIRPORT",
+        "name": "SHUTTLESWORTH INTL",
+        "detailedName": "BIRMINGHAM/AL/US:SHUTTLESWORTH",
+        "timeZoneOffset": "-06:00",
+        "iataCode": "BHM",
+        "geoCode": {
+          "latitude": 33.56166,
+          "longitude": -86.75254
+        },
+        "address": {
+          "cityName": "BIRMINGHAM",
+          "cityCode": "BHM",
+          "countryName": "UNITED STATES OF AMERICA",
+          "countryCode": "US",
+          "stateCode": "AL",
+          "regionCode": "NAMER"
+        },
+        "distance": {
+          "value": 275,
+          "unit": "KM"
+        },
+        "analytics": {
+          "flights": {
+            "score": 3
+          },
+          "travelers": {
+            "score": 2
+          }
+        },
+        "relevance": 1.02874
+      }
+    ]
+  },
+  "data": [
+    {
+      "type": "location",
+      "subType": "AIRPORT",
+      "name": "INTERNATIONAL",
+      "detailedName": "NASHVILLE/TN/US:INTERNATIONAL",
+      "timeZoneOffset": "-06:00",
+      "iataCode": "BNA",
+      "geoCode": {
+        "latitude": 36.1195,
+        "longitude": -86.68416
+      },
+      "address": {
+        "cityName": "NASHVILLE",
+        "cityCode": "BNA",
+        "countryName": "UNITED STATES OF AMERICA",
+        "countryCode": "US",
+        "stateCode": "TN",
+        "regionCode": "NAMER"
+      },
+      "distance": {
+        "value": 10,
+        "unit": "KM"
+      },
+      "analytics": {
+        "flights": {
+          "score": 11
+        },
+        "travelers": {
+          "score": 8
+        }
+      },
+      "relevance": 97.43171
+    },
+    {
+      "type": "location",
+      "subType": "AIRPORT",
+      "name": "HARTSFIELD-JACKSON INT",
+      "detailedName": "ATLANTA/GA/US:HARTSFIELD-JACKS",
+      "timeZoneOffset": "-05:00",
+      "iataCode": "ATL",
+      "geoCode": {
+        "latitude": 33.63667,
+        "longitude": -84.42806
+      },
+      "address": {
+        "cityName": "ATLANTA",
+        "cityCode": "ATL",
+        "countryName": "UNITED STATES OF AMERICA",
+        "countryCode": "US",
+        "stateCode": "GA",
+        "regionCode": "NAMER"
+      },
+      "distance": {
+        "value": 341,
+        "unit": "KM"
+      },
+      "analytics": {
+        "flights": {
+          "score": 64
+        },
+        "travelers": {
+          "score": 60
+        }
+      },
+      "relevance": 18.79282
+    },
+    {
+      "type": "location",
+      "subType": "AIRPORT",
+      "name": "LAMBERT",
+      "detailedName": "ST LOUIS/MO/US:LAMBERT",
+      "timeZoneOffset": "-06:00",
+      "iataCode": "STL",
+      "geoCode": {
+        "latitude": 38.74861,
+        "longitude": -90.37
+      },
+      "address": {
+        "cityName": "ST LOUIS",
+        "cityCode": "STL",
+        "countryName": "UNITED STATES OF AMERICA",
+        "countryCode": "US",
+        "stateCode": "MO",
+        "regionCode": "NAMER"
+      },
+      "distance": {
+        "value": 439,
+        "unit": "KM"
+      },
+      "analytics": {
+        "flights": {
+          "score": 15
+        },
+        "travelers": {
+          "score": 11
+        }
+      },
+      "relevance": 3.31775
+    },
+    {
+      "type": "location",
+      "subType": "AIRPORT",
+      "name": "NORTHERN KENTUCKY INTL",
+      "detailedName": "CINCINNATI/OH/US:NORTHERN KENT",
+      "timeZoneOffset": "-05:00",
+      "iataCode": "CVG",
+      "geoCode": {
+        "latitude": 39.04889,
+        "longitude": -84.66778
+      },
+      "address": {
+        "cityName": "CINCINNATI",
+        "cityCode": "CVG",
+        "countryName": "UNITED STATES OF AMERICA",
+        "countryCode": "US",
+        "stateCode": "OH",
+        "regionCode": "NAMER"
+      },
+      "distance": {
+        "value": 382,
+        "unit": "KM"
+      },
+      "analytics": {
+        "flights": {
+          "score": 7
+        },
+        "travelers": {
+          "score": 4
+        }
+      },
+      "relevance": 1.95797
+    },
+    {
+      "type": "location",
+      "subType": "AIRPORT",
+      "name": "INDIANAPOLIS INTL",
+      "detailedName": "INDIANAPOLIS/IN/US:INTL",
+      "timeZoneOffset": "-05:00",
+      "iataCode": "IND",
+      "geoCode": {
+        "latitude": 39.71722,
+        "longitude": -86.29444
+      },
+      "address": {
+        "cityName": "INDIANAPOLIS",
+        "cityCode": "IND",
+        "countryName": "UNITED STATES OF AMERICA",
+        "countryCode": "US",
+        "stateCode": "IN",
+        "regionCode": "NAMER"
+      },
+      "distance": {
+        "value": 411,
+        "unit": "KM"
+      },
+      "analytics": {
+        "flights": {
+          "score": 7
+        },
+        "travelers": {
+          "score": 5
+        }
+      },
+      "relevance": 1.79639
+    },
+    {
+      "type": "location",
+      "subType": "AIRPORT",
+      "name": "MEMPHIS INTL",
+      "detailedName": "MEMPHIS/TN/US:MEMPHIS INTL",
+      "timeZoneOffset": "-06:00",
+      "iataCode": "MEM",
+      "geoCode": {
+        "latitude": 35.04218,
+        "longitude": -89.98157
+      },
+      "address": {
+        "cityName": "MEMPHIS",
+        "cityCode": "MEM",
+        "countryName": "UNITED STATES OF AMERICA",
+        "countryCode": "US",
+        "stateCode": "TN",
+        "regionCode": "NAMER"
+      },
+      "distance": {
+        "value": 312,
+        "unit": "KM"
+      },
+      "analytics": {
+        "flights": {
+          "score": 5
+        },
+        "travelers": {
+          "score": 3
+        }
+      },
+      "relevance": 1.55804
+    },
+    {
+      "type": "location",
+      "subType": "AIRPORT",
+      "name": "INTL-STANDIFORD FLD",
+      "detailedName": "LOUISVILLE/KY/US:INTL-STANDIFO",
+      "timeZoneOffset": "-05:00",
+      "iataCode": "SDF",
+      "geoCode": {
+        "latitude": 38.17444,
+        "longitude": -85.73611
+      },
+      "address": {
+        "cityName": "LOUISVILLE",
+        "cityCode": "SDF",
+        "countryName": "UNITED STATES OF AMERICA",
+        "countryCode": "US",
+        "stateCode": "KY",
+        "regionCode": "NAMER"
+      },
+      "distance": {
+        "value": 254,
+        "unit": "KM"
+      },
+      "analytics": {
+        "flights": {
+          "score": 4
+        },
+        "travelers": {
+          "score": 2
+        }
+      },
+      "relevance": 1.43452
+    },
+    {
+      "type": "location",
+      "subType": "AIRPORT",
+      "name": "INTL-CARL T.JONES FLD",
+      "detailedName": "HUNTSVILLE/AL/US:INTL-CARL T.J",
+      "timeZoneOffset": "-06:00",
+      "iataCode": "HSV",
+      "geoCode": {
+        "latitude": 34.63722,
+        "longitude": -86.775
+      },
+      "address": {
+        "cityName": "HUNTSVILLE",
+        "cityCode": "HSV",
+        "countryName": "UNITED STATES OF AMERICA",
+        "countryCode": "US",
+        "stateCode": "AL",
+        "regionCode": "NAMER"
+      },
+      "distance": {
+        "value": 156,
+        "unit": "KM"
+      },
+      "analytics": {
+        "flights": {
+          "score": 2
+        },
+        "travelers": {
+          "score": 1
+        }
+      },
+      "relevance": 1.07267
+    },
+    {
+      "type": "location",
+      "subType": "AIRPORT",
+      "name": "MCGHEE TYSON",
+      "detailedName": "KNOXVILLE/TN/US:MCGHEE TYSON",
+      "timeZoneOffset": "-05:00",
+      "iataCode": "TYS",
+      "geoCode": {
+        "latitude": 35.80673,
+        "longitude": -83.99115
+      },
+      "address": {
+        "cityName": "KNOXVILLE",
+        "cityCode": "TYS",
+        "countryName": "UNITED STATES OF AMERICA",
+        "countryCode": "US",
+        "stateCode": "TN",
+        "regionCode": "NAMER"
+      },
+      "distance": {
+        "value": 250,
+        "unit": "KM"
+      },
+      "analytics": {
+        "flights": {
+          "score": 3
+        },
+        "travelers": {
+          "score": 1
+        }
+      },
+      "relevance": 1.06708
+    },
+    {
+      "type": "location",
+      "subType": "AIRPORT",
+      "name": "SHUTTLESWORTH INTL",
+      "detailedName": "BIRMINGHAM/AL/US:SHUTTLESWORTH",
+      "timeZoneOffset": "-06:00",
+      "iataCode": "BHM",
+      "geoCode": {
+        "latitude": 33.56166,
+        "longitude": -86.75254
+      },
+      "address": {
+        "cityName": "BIRMINGHAM",
+        "cityCode": "BHM",
+        "countryName": "UNITED STATES OF AMERICA",
+        "countryCode": "US",
+        "stateCode": "AL",
+        "regionCode": "NAMER"
+      },
+      "distance": {
+        "value": 275,
+        "unit": "KM"
+      },
+      "analytics": {
+        "flights": {
+          "score": 3
+        },
+        "travelers": {
+          "score": 2
+        }
+      },
+      "relevance": 1.02874
+    }
+  ],
+  "parsed": true
+}

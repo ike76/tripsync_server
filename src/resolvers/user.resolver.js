@@ -3,15 +3,19 @@ import User, { AdminLoc } from "../models/user.model"
 import mongoose from "mongoose"
 const ObjectId = mongoose.Types.ObjectId
 
-import { findOrCreateAirports } from "../controllers/Location.controller"
+import {
+  findOrCreateAirports,
+  fillAirportDetails
+} from "../controllers/Location.controller"
 import Location from "../models/location.model"
+import { updateUserAirports } from "../controllers/User.controller"
+import { AuthenticationError } from "apollo-server"
 export const userResolver = {
   Query: {
     user: async (parent, { id }, { models: { User } }) => {
       return User.findById(id)
     },
     users: (_, { userIds }, { models }) => {
-      console.log("called with", userIds)
       // return a list of users
       return User.find({
         _id: { $in: userIds }
@@ -54,13 +58,28 @@ export const userResolver = {
       )
       return newMe
     },
-    createTraveler: async (root, args, { models, me }) => {
-      const newUser = await User.create(args.input).catch(err =>
-        console.log(err)
-      )
+    createTraveler: async (
+      root,
+      { input, homeAddressInput },
+      { models, me }
+    ) => {
+      // TODO. make sure that 'me' is authorized to be an admin for this person.
+      // if not, send a response that says click here to send them a note and be authorized. etc.
+      const newUser = await User.findOneAndUpdate(
+        { email: input.email },
+        {
+          ...input,
+          homeAddress: homeAddressInput
+        },
+        {
+          upsert: true,
+          new: true
+        }
+      ).catch(err => console.log(err))
+
       await User.findByIdAndUpdate(
         me._id,
-        { $push: { adminTravelers: newUser._id } },
+        { $addToSet: { adminTravelers: newUser } },
         { new: true }
       ).catch(err => {
         throw new Error(err.message)
@@ -75,19 +94,31 @@ export const userResolver = {
       //TODO am i authorized to update this user?
       console.log("update User input", input)
       console.log("update User HomeAddyInput", homeAddressInput)
+      const oldUser = await User.findById(userId)
+      const freqAirports = await updateUserAirports({
+        oldUser,
+        newAddress: homeAddressInput
+      })
 
-      if (input.homeAirports) {
-        input.homeAirports = await findOrCreateAirports(input.homeAirports)
+      const updateObj = {
+        ...input,
+        homeAddress: homeAddressInput,
+        freqAirports
       }
-      const updateObj = { ...input, homeAddress: homeAddressInput }
       let updatedUser = await User.findByIdAndUpdate(userId, updateObj, {
         new: true
       })
       return updatedUser
     },
-    deleteUser: async (root, { id }) => {
-      const response = await User.findByIdAndDelete(id)
-      return !!response
+    deleteUser: async (root, { userId }, { me }) => {
+      if (!me) throw new AuthenticationError("you must be signed in")
+      const response = await User.findByIdAndDelete(userId)
+      const upDateMe = await User.findByIdAndUpdate(me._id, {
+        $pull: { adminTravelers: { _id: userId } }
+      })
+      console.log("response", response)
+      console.log("upDateMe", upDateMe)
+      return userId
     },
     updateMe: async (_, args, { models, me }) => {
       const updatedUser = await User.findByIdAndUpdate(me._id, args, {
@@ -97,16 +128,50 @@ export const userResolver = {
       return updatedUser
     },
     updateAdminLoc: async (_, { input }, { models, me }) => {
-      const { adminLocId, notes } = input
+      console.log("input", input)
+      const { adminLocId, ...updateObj } = input
       // TODO check if I'm permitted to edit this adminLoc
       const updatedAdminLoc = AdminLoc.findByIdAndUpdate(
         adminLocId,
-        {
-          notes
-        },
+        updateObj,
         { new: true }
       )
+      // await new Promise((resolve, reject) => {
+      //   setTimeout(() => {
+      //     resolve()
+      //   }, 2000)
+      // })
       return updatedAdminLoc
+    },
+    addFreqAirport: async (_, { userId, airportCode }, { models, me }) => {
+      console.log("userId, airportcode", userId, airportCode)
+      const location = await fillAirportDetails(airportCode)
+      const newAdminLoc = await AdminLoc.findOneAndUpdate(
+        {
+          ownerAdmin: ObjectId(userId),
+          location: location
+        },
+        {
+          ownerAdmin: ObjectId(userId),
+          location: ObjectId(location._id),
+          use: true
+        },
+        { upsert: true, new: true }
+      ).populate("location")
+      const newUser = await User.findByIdAndUpdate(userId, {
+        $push: { freqAirports: newAdminLoc }
+      })
+      return newAdminLoc
+    },
+    removeFreqAirport: async (_, { adminLocId, userId }, ctx) => {
+      console.log("adminLoc ID", adminLocId)
+      console.log("userId", userId)
+      // remove adminLoc from freqAirports
+      const updatedUser = await User.findByIdAndUpdate(userId, {
+        $pull: { freqAirports: adminLocId }
+      })
+      return "return from remove freq airport"
+      // delete adminLoc
     }
   },
   User: {
@@ -115,14 +180,6 @@ export const userResolver = {
       const mePopulated = await User.findById(me._id).populate("adminTravelers")
       return mePopulated.adminTravelers
     },
-
-    // adminAirports: async (user, __, { models, me }) => {
-    //   const mePop = await User.findById(me._id).populate({
-    //     path: "adminAirports"
-    //   })
-    //   console.log("mePop", mePop)
-    //   return mePop.adminAirports
-    // },
     adminLocs: async (user, { limit }) => {
       const userInst = await User.findById(user._id).populate({
         path: "adminLocs",
@@ -133,11 +190,12 @@ export const userResolver = {
       })
       return userInst.adminLocs
     },
-    homeAirports: async user => {
-      const { homeAirports } = await User.findById(user.id).populate(
-        "homeAirports"
-      )
-      return homeAirports
+    freqAirports: async user => {
+      const { freqAirports } = await User.findById(user.id).populate({
+        path: "freqAirports",
+        populate: { path: "location" }
+      })
+      return freqAirports
     }
   }
 }
